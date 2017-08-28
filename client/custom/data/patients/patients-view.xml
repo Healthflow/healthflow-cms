@@ -1,0 +1,43 @@
+<meta-page hasHeaders="false">
+   
+    <masterComponent>
+        <card>
+            <row class="patient-summary">
+                <datasource 
+                    type="event-rest"
+                    uri="/custom/data/patient.json" 
+                    verb="get"
+                    eventName="patient-selected"
+                    successEventName="patient-loaded">
+                    
+                    <visible-when expression="data != null">
+                        
+                        <heading>Please Select A Patient</heading>
+                    
+                    </visible-when>
+                    
+                    <visible-when expression="return data != null">
+                    
+                        <column span="6">
+                            <h3>Patient Info</h3>
+                            <ul>
+                                <dataSource type="event" eventName="patient-loaded">
+                                    
+                                    <li>Name: <span>${title} ${firstName} ${lastName}</span></li>
+                                    
+                                    <li>NHS Number: <span>${id} </span></li>
+                                    
+                                    <li>Age: <span>51 years, 6 months</span></li>
+                                    
+                                    <li>Sex: <span>${gender}</span></li>
+                                    
+                                </dataSource>
+                            </ul>
+                        </column>
+                        
+                    </visible-when>
+                </datasource>
+            </row>
+        </card>
+    </masterComponent>
+</meta-page>

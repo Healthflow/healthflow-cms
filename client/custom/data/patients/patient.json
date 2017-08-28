@@ -1,0 +1,45 @@
+{
+    "id": "c978d679-a3de-49eb-82be-83d33ebff0ef",
+    "patientNumber": "8411046",
+    "title": "Mr",
+    "gender": "Male",
+    "firstName": "Jamie",
+    "middleNames": "",
+    "lastName": "Mckniff",
+    "email": "jmckniff@gmail.com",
+    "dateOfBirth": "21/02/1987",
+    "consultancyName": "Paisley",
+    "location": "Pannal",
+    "teamName": "Radiology",
+    "allergies": [
+        "Penicillin",
+        "Cows milk",
+        "Egg yolks"
+    ],
+    "problems": [
+        "Conductive hearing loss, bilateral",
+        "Respiratory syncytial virus pneumonia",
+        "Acute amoebic dysentery"
+    ],
+    "height": "163cm",
+    "weight": "47.6kg",
+    "bloodPressure": {
+        "value": "88/70 mm[Hg]",
+        "systolic": 51,
+        "diastolic": 56
+    },
+    "events": [
+        {
+            "eventName": "Admitted",
+            "eventTimestamp": "2017-06-23T16:27:17:01:00"
+        },
+        {
+            "eventName": "Triage by Dr D.Fascia",
+            "eventTimestamp": "2017-06-23T16:27:17:09:00"
+        },
+        {
+            "eventName": "Taken to Radiology",
+            "eventTimestamp": "2017-06-23T16:27:17:11:00"
+        }
+    ]
+}

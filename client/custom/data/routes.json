@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "path": "/dashboard",
+      "schemaUri": "/custom/data/dashboard.json"
+    },
+    {
+      "path": "/todo",
+      "schemaUri": "/custom/data/todo-list.json"
+    },
+    {
+      "path": "/actions-test",
+      "schemaUri": "/custom/data/actions-test.json"
+    },
+    {
+      "path": "/patients",
+      "schemaUri": "/custom/data/patients/patients-view.json"
+    }
+  ]
+}

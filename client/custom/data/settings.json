@@ -1,0 +1,11 @@
+{
+    "defaultLanguage": "en",
+    "defaultDateFormat": "dd/MM/yyyy",
+    "apiBaseUrl": "/custom/",
+    "supportedLanguages": [
+        {
+            "name": "English",
+            "value": "en"
+        }
+    ]
+}

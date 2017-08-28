@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "items": {},
+  "properties": {
+    "routes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/routeItem"
+      }
+    }
+  },
+  "required": [
+    "routes"
+  ],
+  "definitions": {
+    "routeItem": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "schemaUri": {
+          "type": "string"
+        },
+        "childRoutes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/routeItem"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "schemaUri"
+      ]
+    }
+  }
+}

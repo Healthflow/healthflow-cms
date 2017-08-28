@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "A title is required"
+        }
+      ]
+    },
+    "gender": {
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "A gender is required"
+        }
+      ]
+    },
+    "firstName": {
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "A first name is required"
+        }
+      ]
+    },
+    "middleNames": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "A last name is required"
+        }
+      ]
+    },
+    "dateOfBirth": {  
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "A date of birth is required"
+        }
+      ]
+    }
+  }
+}

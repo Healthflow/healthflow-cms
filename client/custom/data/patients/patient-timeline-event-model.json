@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "validationRules": [
+        {
+          "name": "required",
+          "error": "An event name is required"
+        }
+      ]
+    }
+  }
+}

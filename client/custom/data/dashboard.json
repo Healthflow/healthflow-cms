@@ -1,0 +1,15 @@
+{
+    "component": {
+        "componentType": "container",
+        "options": {
+            "className": "container content gutter"
+        },
+        "children": [{
+            "componentType": "heading",
+            "options": {
+                "text": "Welcome to the Healthflow dashboard!"
+            },
+            "children": []
+        }]
+    }
+}

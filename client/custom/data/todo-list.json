@@ -1,0 +1,37 @@
+{
+    "componentType": "card",
+    "options": {
+        "bordered": "false",
+        "title": "Viewing To Do List"
+    },
+    "children": [{
+        "componentType": "table",
+        "dataSource": {
+            "type": "array",
+            "options": {
+                "data": [{
+                    "id": "1233",
+                    "description": "Integrate GoldenLayout"
+                }]
+            }
+        },
+        "options": {
+            "rowIdProperty": "id",
+            "columns": [{
+                "source": "model",
+                "title": "Description",
+                "name": "description",
+                "sorter": {
+                    "type": "alphabetical"
+                },
+                "filter": {
+                    "type": "contains",
+                    "options": {
+                        "placeholder": "Enter a description"
+                    }
+                }
+            }]
+        },
+        "children": []
+    }]
+}

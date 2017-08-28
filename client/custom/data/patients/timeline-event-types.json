@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Admitted",
+        "value": "1"
+    },
+    {
+        "name": "Physical Exam",
+        "value": "2"
+    },
+    {
+        "name": "Transferred location",
+        "value": "3"
+    },
+    {
+        "name": "Scan Result",
+        "value": "4"
+    },
+    {
+        "name": "Lab Result",
+        "value": "5"
+    }
+]

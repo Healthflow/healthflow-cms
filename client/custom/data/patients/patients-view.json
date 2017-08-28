@@ -1,0 +1,677 @@
+{
+    "events": {
+        "onLoad": {
+            "actions": [{
+                "type": "http-request",
+                "parameters": {
+                    "uri": "/custom/data/patients/patient-timeline-event-model.json",
+                    "verb": "get",
+                    "path": "models.patient.timelineEvent"
+                }
+            }]
+        },
+        "onUnload": {
+            "actions": [{
+                "type": "remove-data",
+                "parameters": {
+                    "path": "models.patient.timelineEvent"
+                }
+            }]
+        }
+    },
+    "component": {
+        "componentType": "meta-page",
+        "options": {
+            "settings": {
+                "hasHeaders": true,
+                "showCloseIcon": false,
+                "showPopoutIcon": false
+            },
+            "metabarComponent": {
+                "componentType": "card",
+                "options": {
+                    "className": "full-height",
+                    "bordered": false,
+                    "title": "Patient Summary",
+                    "panelTitle": "Patient Summary"
+                },
+                "children": [{
+                    "componentType": "row",
+                    "dataSource": {
+                        "type": "state",
+                        "options": {
+                            "showLoadingNotifcation": true,
+                            "path": "selectedPatient",
+                            "defaultValue": null
+                        }
+                    },
+                    "options": {},
+                    "children": [{
+                        "componentType": "if",
+                        "dataSource": {
+                            "type": "state",
+                            "options": {
+                                "path": "selectedPatient",
+                                "defaultValue": null
+                            }
+                        },
+                        "options": {
+                            "expression": "return data != null;"
+                        },
+                        "children": [{
+                            "componentType": "label",
+                            "options": {
+                                "when": false,
+                                "text": "Please select a patient to view their detailed medical information."
+                            },
+                            "children": []
+                        }, {
+                            "componentType": "column",
+                            "options": {
+                                "when": true,
+                                "span": 6
+                            },
+                            "children": [{
+                                "componentType": "heading",
+                                "options": {
+                                    "text": "Info"
+                                },
+                                "children": []
+                            }, {
+                                "componentType": "list",
+                                "options": {
+                                    "className": "patient-info"
+                                },
+                                "children": [{
+                                    "componentType": "list-item",
+                                    "dataSource": {
+                                        "type": "state",
+                                        "options": {
+                                            "path": "selectedPatient",
+                                            "defaultValue": null
+                                        }
+                                    },
+                                    "options": {
+                                        "html": "Name: <span>${title} ${firstName} ${lastName}</span>"
+                                    },
+                                    "children": []
+                                }, {
+                                    "componentType": "list-item",
+                                    "dataSource": {
+                                        "type": "state",
+                                        "options": {
+                                            "path": "selectedPatient",
+                                            "defaultValue": null
+                                        }
+                                    },
+                                    "options": {
+                                        "html": "NHS Number: <span>${id}</span>"
+                                    },
+                                    "children": []
+                                }, {
+                                    "componentType": "list-item",
+                                    "options": {
+                                        "html": "Age: <span>51 years, 6 months</span>"
+                                    },
+                                    "children": []
+                                }, {
+                                    "componentType": "list-item",
+                                    "dataSource": {
+                                        "type": "state",
+                                        "options": {
+                                            "path": "selectedPatient",
+                                            "defaultValue": null
+                                        }
+                                    },
+                                    "options": {
+                                        "html": "Sex: <span>${gender}</span>"
+                                    },
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "componentType": "column",
+                            "options": {
+                                "when": true,
+                                "span": 6
+                            },
+                            "children": [{
+                                "componentType": "heading",
+                                "options": {
+                                    "text": "Allergies"
+                                },
+                                "children": []
+                            }, {
+                                "componentType": "for-each",
+                                "dataSource": {
+                                    "type": "state",
+                                    "options": {
+                                        "path": "selectedPatient",
+                                        "defaultValue": null
+                                    }
+                                },
+                                "options": {
+                                    "array": "allergies",
+                                    "containerComponent": {
+                                        "componentType": "list",
+                                        "options": {},
+                                        "children": []
+                                    },
+                                    "itemComponent": {
+                                        "componentType": "tag",
+                                        "options": {
+                                            "text": "${item}",
+                                            "color": "red"
+                                        },
+                                        "children": []
+                                    }
+                                },
+                                "children": []
+                            }]
+                        }, {
+                            "componentType": "column",
+                            "options": {
+                                "when": true,
+                                "span": 6
+                            },
+                            "children": [{
+                                "componentType": "heading",
+                                "options": {
+                                    "text": "Problems"
+                                },
+                                "children": []
+                            }, {
+                                "componentType": "for-each",
+                                "dataSource": {
+                                    "type": "state",
+                                    "options": {
+                                        "path": "selectedPatient",
+                                        "defaultValue": null
+                                    }
+                                },
+                                "options": {
+                                    "array": "problems",
+                                    "containerComponent": {
+                                        "componentType": "list",
+                                        "options": {},
+                                        "children": []
+                                    },
+                                    "itemComponent": {
+                                        "componentType": "list-item",
+                                        "options": {
+                                            "html": "${item}"
+                                        },
+                                        "children": []
+                                    }
+                                },
+                                "children": []
+                            }]
+                        }]
+                    }]
+                }]
+
+            },
+            "masterComponent": {
+                "componentType": "card",
+                "options": {
+                    "title": "Patient Search",
+                    "panelTitle": "Patient Search",
+                    "className": "full-height",
+                    "style": {
+                        "minWidth": "350px"
+                    },
+                    "bordered": false
+                },
+                "children": [{
+                    "componentType": "table",
+                    "dataSource": {
+                        "type": "rest",
+                        "options": {
+                            "uri": "/custom/data/patients/patients.json",
+                            "verb": "get",
+                            "path": "patients",
+                            "transform": "return data.items;",
+                            "defaultValue": [],
+                            "params": [],
+                            "headers": []
+                        }
+                    },
+                    "options": {
+                        "rowIdProperty": "id",
+                        "loadingMessage": "Loading Cases, Please Wait...",
+                        "columns": [{
+                            "source": "model",
+                            "title": "First Name",
+                            "name": "firstName",
+                            "sorter": {
+                                "type": "alphabetical"
+                            },
+                            "filter": {
+                                "type": "contains",
+                                "options": {
+                                    "placeholder": "Enter a first name"
+                                }
+                            }
+                        }, {
+                            "source": "model",
+                            "title": "Surname",
+                            "name": "lastName",
+                            "sorter": {
+                                "type": "alphabetical"
+                            },
+                            "filter": {
+                                "type": "contains",
+                                "options": {
+                                    "placeholder": "Enter a surname"
+                                }
+                            }
+                        }, {
+                            "source": "model",
+                            "title": "Patient Number",
+                            "name": "patientNumber",
+                            "sorter": {
+                                "type": "alphabetical"
+                            },
+                            "filter": {
+                                "type": "contains",
+                                "options": {
+                                    "placeholder": "Enter an NHS number"
+                                }
+                            }
+                        }, {
+                            "source": "static",
+                            "title": "Actions",
+                            "name": "action",
+                            "component": {
+                                "componentType": "container",
+                                "options": {},
+                                "children": [{
+                                    "componentType": "action-link",
+                                    "options": {
+                                        "text": "View",
+                                        "action": {
+                                            "type": "http-request",
+                                            "parameters": {
+                                                "uri": "/custom/data/patients/patient.json",
+                                                "verb": "get",
+                                                "path": "selectedPatient"
+                                            }
+                                        }
+                                    },
+                                    "children": []
+                                }]
+                            }
+                        }]
+                    },
+                    "children": []
+                }]
+            },
+            "detailComponent": {
+                "componentType": "card",
+                "options": {
+                    "title": "Patient Details",
+                    "panelTitle": "Patient Details",
+                    "className": "full-height",
+                    "bordered": false
+                },
+                "children": [{
+                    "componentType": "row",
+                    "options": {
+                        "className": "patient-summary"
+                    },
+                    "children": [{
+                        "componentType": "if",
+                        "dataSource": {
+                            "type": "state",
+                            "options": {
+                                "showLoadingNotifcation": true,
+                                "path": "selectedPatient",
+                                "defaultValue": null
+                            }
+                        },
+                        "options": {
+                            "expression": "return data != undefined;"
+                        },
+                        "children": [{
+                            "componentType": "label",
+                            "options": {
+                                "when": false,
+                                "text": "Please select a patient to view their detailed medical information."
+                            },
+                            "children": []
+                        }, {
+                            "componentType": "row",
+                            "options": {
+                                "when": true,
+                                "className": "patient-summary"
+                            },
+                            "children": [{
+                                "componentType": "column",
+                                "options": {
+                                    "span": 6,
+                                    "className": "gutter"
+                                },
+                                "children": [{
+                                    "componentType": "card",
+                                    "options": {
+                                        "title": "General",
+                                        "bordered": false
+                                    },
+                                    "children": [{
+                                        "componentType": "list",
+                                        "options": {
+                                            "className": "patient-info"
+                                        },
+                                        "children": [{
+                                            "componentType": "list-item",
+                                            "dataSource": {
+                                                "type": "state",
+                                                "options": {
+                                                    "path": "selectedPatient",
+                                                    "defaultValue": null
+                                                }
+                                            },
+                                            "options": {
+                                                "html": "Height <span>${height}</span>"
+                                            },
+                                            "children": []
+                                        }, {
+                                            "componentType": "list-item",
+                                            "dataSource": {
+                                                "type": "state",
+                                                "options": {
+                                                    "path": "selectedPatient",
+                                                    "defaultValue": null
+                                                }
+                                            },
+                                            "options": {
+                                                "html": "Weight: <span>${weight}</span>"
+                                            },
+                                            "children": []
+                                        }]
+                                    }]
+                                }]
+                            }, {
+                                "componentType": "column",
+                                "options": {
+                                    "span": 6,
+                                    "className": "gutter"
+                                },
+                                "children": [{
+                                    "componentType": "card",
+                                    "options": {
+                                        "title": "Blood pressure",
+                                        "bordered": false
+                                    },
+                                    "children": [{
+                                        "componentType": "list",
+                                        "options": {
+                                            "className": "patient-info"
+                                        },
+                                        "children": [{
+                                            "componentType": "list-item",
+                                            "options": {},
+                                            "children": [{
+                                                "componentType": "container",
+                                                "options": {},
+                                                "children": [{
+                                                    "componentType": "container",
+                                                    "dataSource": {
+                                                        "type": "state",
+                                                        "options": {
+                                                            "path": "selectedPatient",
+                                                            "defaultValue": null
+                                                        }
+                                                    },
+                                                    "options": {
+                                                        "html": "Systolic:"
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "progress",
+                                                    "dataSource": {
+                                                        "type": "state",
+                                                        "options": {
+                                                            "path": "selectedPatient.bloodPressure.systolic",
+                                                            "defaultValue": 0
+                                                        }
+                                                    },
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }, {
+                                            "componentType": "list-item",
+                                            "dataSource": {
+                                                "type": "state",
+                                                "options": {
+                                                    "path": "selectedPatient",
+                                                    "defaultValue": null
+                                                }
+                                            },
+                                            "options": {},
+                                            "children": [{
+                                                "componentType": "container",
+                                                "options": {},
+                                                "children": [{
+                                                    "componentType": "container",
+                                                    "dataSource": {
+                                                        "type": "state",
+                                                        "options": {
+                                                            "path": "selectedPatient",
+                                                            "defaultValue": null
+                                                        }
+                                                    },
+                                                    "options": {
+                                                        "html": "Diastolic:"
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "progress",
+                                                    "dataSource": {
+                                                        "type": "state",
+                                                        "options": {
+                                                            "path": "selectedPatient.bloodPressure.diastolic",
+                                                            "defaultValue": 0
+                                                        }
+                                                    },
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+
+                        }, {
+                            "componentType": "row",
+                            "options": {
+                                "when": true,
+                                "className": "patient-summary"
+                            },
+                            "children": [{
+                                "componentType": "column",
+                                "options": {
+                                    "span": 24,
+                                    "className": "gutter"
+                                },
+                                "children": [{
+                                    "componentType": "card",
+                                    "options": {
+                                        "title": "Timeline",
+                                        "bordered": false
+                                    },
+                                    "children": [{
+                                        "componentType": "container",
+                                        "options": {
+                                            "style": {
+                                                "marginBottom": "10px"
+                                            }
+                                        },
+                                        "children": [{
+                                            "componentType": "state-link",
+                                            "options": {
+                                                "text": "Add timeline event",
+                                                "destination": "selectedPatient.isTimelineModalVisible",
+                                                "state": true
+                                            },
+                                            "children": []
+                                        }]
+                                    }, {
+                                        "componentType": "search-filter",
+                                        "dataSource": {
+                                            "type": "state",
+                                            "options": {
+                                                "path": "selectedPatient",
+                                                "defaultValue": null
+                                            }
+                                        },
+                                        "options": {
+                                            "style": {
+                                                "marginBottom": "10px"
+                                            },
+                                            "placeholder": "Search the timeline...",
+                                            "searchArray": "events",
+                                            "searchProperty": "eventName",
+                                            "destination": "selectedPatient.events"
+                                        },
+                                        "children": []
+                                    }, {
+                                        "componentType": "modal",
+                                        "dataSource": {
+                                            "type": "state",
+                                            "options": {
+                                                "path": "selectedPatient.isTimelineModalVisible",
+                                                "defaultValue": false
+                                            }
+                                        },
+                                        "options": {
+                                            "title": "Add New Timeline Event",
+                                            "footer": false
+                                        },
+                                        "children": [{
+                                            "componentType": "form",
+                                            "options": {
+                                                "events": {
+                                                    "onSubmit": [
+                                                        {
+                                                            "type": "http-request",
+                                                            "parameters": {
+                                                                "uri": "http://someapi.com/patients/${selectedPatient.id}/event",
+                                                                "verb": "post"
+                                                            },
+                                                            "successActions": [
+                                                                {
+                                                                    "type": "show-notification",
+                                                                    "parameters": {
+                                                                        "notificationType": "success",
+                                                                        "title": "Timeline Event Added",
+                                                                        "description": "The timeline event was successfully added."
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "failActions": []
+                                                        }
+                                                    ]
+                                                },
+                                                "fields": [{
+                                                    "componentType": "select",
+                                                    "dataSource": {
+                                                        "type": "rest",
+                                                        "options": {
+                                                            "uri": "/custom/data/patients/timeline-event-types.json",
+                                                            "verb": "get",
+                                                            "path": "eventTypes",
+                                                            "params": [],
+                                                            "headers": []
+                                                        }
+                                                    },
+                                                    "options": {
+                                                        "name": "eventType",
+                                                        "label": "Event Type",
+                                                        "showSearch": true,
+                                                        "textProperty": "name",
+                                                        "valueProperty": "value",
+                                                        "placeholder": "Please select an event type",
+                                                        "validationRules": [{
+                                                            "name": "required",
+                                                            "message": "The event type is required"
+                                                        }]
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "input",
+                                                    "options": {
+                                                        "name": "eventName",
+                                                        "label": "Event Name",
+                                                        "placeholder": "Please enter an event name",
+                                                        "validationRules": [{
+                                                            "name": "required",
+                                                            "message": "The event name is required"
+                                                        }]
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "textarea",
+                                                    "options": {
+                                                        "name": "eventDescription",
+                                                        "label": "Event Description",
+                                                        "placeholder": "Please enter an event description",
+                                                        "validationRules": [{
+                                                            "name": "required",
+                                                            "message": "The event description is required"
+                                                        }]
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "input",
+                                                    "options": {
+                                                        "name": "eventTimestamp",
+                                                        "label": "Date",
+                                                        "dateFormat": "DD/MM/YYYY HH:mm:ss A",
+                                                        "showTime": true,
+                                                        "placeholder": "Please select an event date",
+                                                        "validationRules": [{
+                                                            "name": "required",
+                                                            "message": "The event date is required"
+                                                        }]
+                                                    },
+                                                    "children": []
+                                                }, {
+                                                    "componentType": "checkbox",
+                                                    "options": {
+                                                        "style": {
+                                                            "marginLeft": "100px"
+                                                        },
+                                                        "name": "isEventPublished",
+                                                        "text": "Publish to timeline"
+                                                    },
+                                                    "children": []
+                                                }]
+                                            },
+                                            "children": []
+                                        }]
+                                    }, {
+                                        "componentType": "timeline",
+                                        "dataSource": {
+                                            "type": "state",
+                                            "options": {
+                                                "path": "selectedPatient",
+                                                "defaultValue": null
+                                            }
+                                        },
+                                        "options": {
+                                            "dataProperty": "events"
+                                        },
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            },
+            "children": []
+        },
+        "children": []
+    }
+}

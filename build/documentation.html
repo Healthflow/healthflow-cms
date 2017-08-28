@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>blah</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="healthflow-client-v020">Healthflow Client v0.2.0</h1>
+
+<p><div class="toc">
+<ul>
+<li><a href="#healthflow-client-v020">Healthflow Client v0.2.0</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#concepts">Concepts</a><ul>
+<li><ul>
+<li><a href="#route">Route</a></li>
+<li><a href="#schema">Schema</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#component">Component</a></li>
+<li><a href="#datasource">Datasource</a></li>
+<li><a href="#action">Action</a></li>
+<li><a href="#action-result">Action Result</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#application-life-cycle">Application Life Cycle</a><ul>
+<li><ul>
+<li><a href="#application-load">Application Load</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
+
+
+
+<h2 id="overview">Overview</h2>
+
+<p>The Healthflow client is Javascript client application written using React, Redux and Redux Sagas, which has been designed to make building data driven single page applications simpler without development knowledge.</p>
+
+<p>The client uses the concept of JSON schema’s to decide how the user interface will look and feel, this reduces the need for developers and allows the application to be rapidly developed.</p>
+
+<p>Features:</p>
+
+<ul>
+<li>Authentication &amp; Authorization.</li>
+<li>Internationalization.</li>
+<li>Themes.</li>
+<li>Search.</li>
+<li>Quick actions.</li>
+<li>Hot key support.</li>
+<li>Page specific actions.</li>
+<li>User management.</li>
+<li>User preferences.</li>
+<li>Widgets.</li>
+<li>Layout and state persistence.</li>
+<li>Push notifications.</li>
+<li>Messaging.</li>
+<li>Auditing</li>
+<li>Error logging.</li>
+</ul>
+
+<hr>
+
+
+
+<h3 id="concepts">Concepts</h3>
+
+<h4 id="route">Route</h4>
+
+<p>A route describes a location in Healthflow and what schema should be used. <br>
+The schema describes how to build the view you will see when you navigate to that location.</p>
+
+
+
+<h4 id="schema">Schema</h4>
+
+<p>A schema is a list of instructions that describes the look, feel and behavior of a view to Healthflow’s rendering engine.</p>
+
+
+
+<h4 id="state">State</h4>
+
+<p>State is data that Healthflow uses, it can be anything from translation values to a patient that has been selected in from a table.</p>
+
+
+
+<h4 id="view">View</h4>
+
+<p>A view is a collection of components that will be served when a user visits a valid route in the Healthflow application.</p>
+
+<h4 id="component">Component</h4>
+
+<p>A component is a reusable piece of Healthflow’s user interface, components can be any size, ranging from an entire page to a button.</p>
+
+
+
+<h4 id="datasource">Datasource</h4>
+
+<p>A data source is a mechanism for components to retrieve data from various sources. <br>
+For example you may use a datasource to load data from a REST API into a table component.</p>
+
+<p>Datasources are bi-directional and allow components to also push data back to the datasource. <br>
+For example you may use a search component to retrieve the data, filter it and push it back into the datasource.</p>
+
+
+
+<h4 id="action">Action</h4>
+
+<p>An action is a built-in function of the Healthflow’s framework, such as sending a HTTP request. <br>
+These action’s can be used in custom views via the JSON schema.</p>
+
+
+
+<h4 id="action-result">Action Result</h4>
+
+<p>An action typically has an outcome, the action result allows Healthflow to track the progress of an action and store any data returned in state.</p>
+
+<hr>
+
+
+
+<h3 id="component-schema">Component Schema</h3>
+
+<p>A component schema is use to express the look, feel and behaviour of a view in the Healthflow application. <br>
+The component schema at the root level has the following properties:</p>
+
+<h4 id="events">Events</h4>
+
+<p>Required: false</p>
+
+<h4 id="component-1">Component</h4>
+
+<p>The “component” property is an object and is required because it is the root component for the view.</p>
+
+<p>Required: true</p>
+
+<p>Example:</p>
+
+<pre class="prettyprint"><code class=" hljs json">{
+    "<span class="hljs-attribute">events</span>": <span class="hljs-value">{}</span>,
+    "<span class="hljs-attribute">component</span>": <span class="hljs-value">{}
+</span>}</code></pre>
+
+<h4 id="component-1">Component</h4>
+
+<p>Example:</p>
+
+<pre class="prettyprint"><code class=" hljs json">{
+    "<span class="hljs-attribute">component</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"container"</span></span>,
+        "<span class="hljs-attribute">dataSource</span>": <span class="hljs-value">{}</span>,
+        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{}</span>,
+        "<span class="hljs-attribute">children</span>": <span class="hljs-value">[]
+    </span>}
+</span>}</code></pre>
+
+<p>Each component, including components in the “children” array have the following properties:</p>
+
+<p><strong>Component Type</strong> <br>
+The component type is used to find the correct component to be rendered, below is a list of available values:</p>
+
+<ul>
+<li>modal</li>
+<li>progress</li>
+<li>logo</li>
+<li>grid</li>
+<li>grid-header</li>
+<li>grid-footer</li>
+<li>grid-sidebar</li>
+<li>grid-content</li>
+<li>grid-header-menu</li>
+<li>menu</li>
+<li>link</li>
+<li>action-link</li>
+<li>state-link</li>
+<li>table</li>
+<li>page</li>
+<li>component</li>
+<li>container</li>
+<li>card</li>
+<li>meta-page</li>
+<li>heading</li>
+<li>tag</li>
+<li>column</li>
+<li>row</li>
+<li>list</li>
+<li>list-item</li>
+<li>for-each</li>
+<li>if</li>
+<li>timeline</li>
+<li>search-filter</li>
+<li>spinner</li>
+</ul>
+
+<h4 id="examples">Examples</h4>
+
+<p>Simple multi-column layout:</p>
+
+<pre class="prettyprint"><code class=" hljs json">{
+    "<span class="hljs-attribute">component</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"container"</span></span>,
+        "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"row"</span></span>,
+                "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                    "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"column"</span></span>,
+                    "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                        "<span class="hljs-attribute">span</span>": <span class="hljs-value"><span class="hljs-number">24</span>
+                    </span>}</span>,
+                    "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                        "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"heading"</span></span>,
+                        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                            "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"This is a simple view"</span>
+                        </span>}
+                    </span>}]
+                </span>}]
+            </span>},
+            {
+                "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"row"</span></span>,
+                "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                        "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"column"</span></span>,
+                        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                            "<span class="hljs-attribute">span</span>": <span class="hljs-value"><span class="hljs-number">12</span>
+                        </span>}</span>,
+                        "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                            "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"label"</span></span>,
+                            "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                                "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"This is a label in column 1"</span>
+                            </span>}
+                        </span>}]
+                    </span>},
+                    {
+                        "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"column"</span></span>,
+                        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                            "<span class="hljs-attribute">span</span>": <span class="hljs-value"><span class="hljs-number">12</span>
+                        </span>}</span>,
+                        "<span class="hljs-attribute">children</span>": <span class="hljs-value">[{
+                            "<span class="hljs-attribute">componentType</span>": <span class="hljs-value"><span class="hljs-string">"label"</span></span>,
+                            "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+                                "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"This is a label in column 2"</span>
+                            </span>}
+                        </span>}]
+                    </span>}
+                ]
+            </span>}
+        ]
+    </span>}
+</span>}</code></pre>
+
+<h2 id="application-life-cycle-events">Application Life Cycle Events</h2>
+
+<h4 id="application-load">Application Load</h4>
+
+<p>The application load event occurs after the user has authenticated.</p>
+
+<div class="sequence-diagram"><svg height="577" version="1.1" width="817.7265625" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px; top: 0.65625px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock55-obj2331" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2334" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2337" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2343" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2346" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2349" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2352" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2355" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2358" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj2361" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="10" y="20" width="142.28125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="19.890625" y="30" width="122.28125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="81.140625" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Authenticated User</tspan></text><rect x="10" y="518" width="142.28125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="19.890625" y="528" width="122.28125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="81.140625" y="537.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Authenticated User</tspan></text><path fill="none" stroke="#000000" d="M81.140625,59L81.140625,518" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="183.8125" y="20" width="92.78125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="193.296875" y="30" width="72.78125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="230.203125" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Application</tspan></text><rect x="183.8125" y="518" width="92.78125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="193.296875" y="528" width="72.78125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="230.203125" y="537.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Application</tspan></text><path fill="none" stroke="#000000" d="M230.203125,59L230.203125,518" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="438.7890625" y="20" width="41.734375" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="448.28125" y="30" width="21.734375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="459.65625" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">API</tspan></text><rect x="438.7890625" y="518" width="41.734375" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="448.28125" y="528" width="21.734375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="459.65625" y="537.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">API</tspan></text><path fill="none" stroke="#000000" d="M459.65625,59L459.65625,518" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="91.125" y="74.5" width="129.0625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="155.671875" y="84" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load the application</tspan></text><path fill="none" stroke="#000000" d="M81.140625,98C81.140625,98,199.24930979311466,98,225.20092510410177,98" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2331)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="240.65625" y="113.5" width="209.453125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="123" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load application settings request</tspan></text><path fill="none" stroke="#000000" d="M230.203125,137C230.203125,137,421.09516364336014,137,454.6504048111383,137" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2334)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="251.71875" y="152.5" width="185.96875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="162" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Application settings response</tspan></text><path fill="none" stroke="#000000" d="M459.65625,176C459.65625,176,268.76421135663986,176,235.2089701888617,176" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2337)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="479.65625" y="196" width="267.203125" height="29" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="484.734375" y="201" width="257.203125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="613.2578125" y="210.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">The requests below are loaded in parallel</tspan></text><rect x="250.75" y="240.5" width="189.28125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="250" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load user preferences request</tspan></text><path fill="none" stroke="#000000" d="M230.203125,264C230.203125,264,421.09516364336014,264,454.6504048111383,264" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2343)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="262.3125" y="279.5" width="165.765625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="289" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">User preferences response</tspan></text><path fill="none" stroke="#000000" d="M459.65625,303C459.65625,303,268.76421135663986,303,235.2089701888617,303" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2346)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="245.359375" y="318.5" width="200.046875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="328" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load application routes request</tspan></text><path fill="none" stroke="#000000" d="M230.203125,342C230.203125,342,421.09516364336014,342,454.6504048111383,342" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2349)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="256.421875" y="357.5" width="176.5625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="367" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Application routes response</tspan></text><path fill="none" stroke="#000000" d="M459.65625,381C459.65625,381,268.76421135663986,381,235.2089701888617,381" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2352)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="256.6875" y="396.5" width="177.390625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="406" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load layout schema request</tspan></text><path fill="none" stroke="#000000" d="M230.203125,420C230.203125,420,421.09516364336014,420,454.6504048111383,420" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2355)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="267.25" y="435.5" width="155.890625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="344.9296875" y="445" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Layout schema response</tspan></text><path fill="none" stroke="#000000" d="M459.65625,459C459.65625,459,268.76421135663986,459,235.2089701888617,459" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2358)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="114.875" y="474.5" width="82.28125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="155.671875" y="484" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Load success</tspan></text><path fill="none" stroke="#000000" d="M230.203125,498C230.203125,498,112.09444020688534,498,86.14282489589823,498" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj2361)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></div>
+
+<hr></div></body>
+</html>

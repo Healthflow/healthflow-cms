@@ -1,0 +1,131 @@
+{
+    "component": {
+        "componentType": "grid",
+        "options": {
+            "className": "full-height"
+        },
+        "children": [{
+            "componentType": "grid-header",
+            "options": {
+                "logo": {
+                    "style": {
+                        "verticalAlign": "middle",
+                        "height": 40,
+                        "width": 40
+                    },
+                    "url": "http://builtwithreact.io/img/logo.svg"
+                }
+            },
+            "children": [{
+                "componentType": "grid-header-menu",
+                "options": {
+                    "mode": "horizontal",
+                    "style": {
+                        "float": "right"
+                    },
+                    "theme": "dark",
+                    "items": [{
+                        "type": "search-input",
+                        "options": {
+                            "placeholder": "Search all cases",
+                            "style": {
+                                "width": 200,
+                                "float": "right"
+                            }
+                        }
+                    }, {
+                        "type": "label",
+                        "options": {
+                            "text": "Some Item 2"
+                        }
+                    }]
+                },
+                "children": []
+            }]
+        }, {
+            "componentType": "grid",
+            "options": {
+                "className": "full-height ant-layout-has-sider"
+            },
+            "children": [{
+                "componentType": "grid-sidebar",
+                "dataSource": {
+                    "type": "state",
+                    "options": {
+                        "path": "isSidebarCollapsed",
+                        "defaultValue": false
+                    }
+                },
+                "options": {
+                    "collapsible": true,
+                    "className": "full-height"
+                },
+                "children": [{
+                    "componentType": "menu",
+                    "options": {
+                        "className": "full-height",
+                        "theme": "dark",
+                        "groups": [{
+                            "heading": "Home",
+                            "isOpen": true,
+                            "icon": "home",
+                            "items": [{
+                                "type": "link",
+                                "options": {
+                                    "text": "Dashboard",
+                                    "href": "/dashboard"
+                                }
+                            },
+                            {
+                                "type": "link",
+                                "options": {
+                                    "text": "Actions Test",
+                                    "href": "/actions-test"
+                                }
+                            }]
+                        }, {
+                            "heading": "Admin",
+                            "isOpen": true,
+                            "icon": "lock",
+                            "items": [{
+                                "type": "link",
+                                "options": {
+                                    "text": "Todo List",
+                                    "href": "/todo"
+                                }
+                            }]
+                        }, {
+                            "heading": "Patients",
+                            "isOpen": true,
+                            "icon": "user",
+                            "items": [{
+                                "type": "link",
+                                "options": {
+                                    "text": "View",
+                                    "href": "/patients"
+                                }
+                            }, {
+                                "type": "link",
+                                "options": {
+                                    "text": "Patient Summary Test",
+                                    "href": "/test"
+                                }
+                            }]
+                        }]
+                    },
+                    "children": []
+                }]
+            }, {
+                "componentType": "grid",
+                "options": {
+
+                },
+                "children": [{
+                    "componentType": "grid-content",
+                    "options": {},
+                    "children": []
+                }]
+            }]
+        }]
+    }
+}

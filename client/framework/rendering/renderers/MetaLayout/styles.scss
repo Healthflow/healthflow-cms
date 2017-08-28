@@ -1,0 +1,7 @@
+/*
+* Golden layout specifies its own background
+* which needs to be overriden.
+*/
+.lm_goldenlayout {
+    background: inherit;
+}

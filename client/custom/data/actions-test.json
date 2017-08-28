@@ -1,0 +1,83 @@
+{
+    "component": {
+        "componentType": "container",
+        "options": {
+            "className": "container content gutter"
+        },
+        "children": [{
+            "componentType": "heading",
+            "options": {
+                "text": "Test Actions"
+            },
+            "children": []
+        }, {
+            "componentType": "action-button",
+            "options": {
+                "text": "Close sidebar",
+                "style": {
+                    "marginRight": "20px"
+                },
+                "action": {
+                    "type": "set-data",
+                    "parameters": {
+                        "path": "isSidebarCollapsed",
+                        "data": true
+                    }
+                }
+            },
+            "children": []
+        }, {
+            "componentType": "action-button",
+            "options": {
+                "text": "Open sidebar",
+                 "style": {
+                    "marginRight": "20px"
+                },
+                "action": {
+                    "type": "set-data",
+                    "parameters": {
+                        "path": "isSidebarCollapsed",
+                        "data": false
+                    }
+                }
+            },
+            "children": []
+        },
+        {
+            "componentType": "action-button",
+            "options": {
+                "text": "Show success notification",
+                "style": {
+                    "marginRight": "20px"
+                },
+                "action": {
+                    "type": "show-notification",
+                    "parameters": {
+                        "notificationType": "success",
+                        "title": "Success",
+                        "description": "The action was successful."
+                    }
+                }
+            },
+            "children": []
+        },
+        {
+            "componentType": "action-button",
+            "options": {
+                "text": "Show error notification",
+                "style": {
+                    "marginRight": "20px"
+                },
+                "action": {
+                    "type": "show-notification",
+                    "parameters": {
+                        "notificationType": "error",
+                        "title": "Error",
+                        "description": "The action has failed."
+                    }
+                }
+            },
+            "children": []
+        }]
+    }
+}
